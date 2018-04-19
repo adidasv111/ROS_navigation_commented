@@ -107,7 +107,7 @@ namespace move_base {
        * @brief  A service call that clears the costmaps of obstacles
        * @param req The service request 
        * @param resp The service response
-       * @return True if the service call succeeds, false otherwise
+       * @return True if the service call suMoveBaseConfigcceeds, false otherwise
        */
       bool clearCostmapsService(std_srvs::Empty::Request &req, std_srvs::Empty::Response &resp);
 

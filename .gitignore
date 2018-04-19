@@ -1,4 +1,6 @@
 *~
 *.project
 *.cproject
-
+cmake-build-debug/
+*.swo
+*.swp

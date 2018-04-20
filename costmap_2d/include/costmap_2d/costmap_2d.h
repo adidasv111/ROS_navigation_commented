@@ -418,9 +418,11 @@ private:
 
   mutex_t* access_;
 protected:
+  // Map size_x, what is the unit
   unsigned int size_x_;
   unsigned int size_y_;
   double resolution_;
+  // Origin point of this costmap
   double origin_x_;
   double origin_y_;
   unsigned char* costmap_;

@@ -85,6 +85,7 @@ void LayeredCostmap::resizeMap(unsigned int size_x, unsigned int size_y, double 
   boost::unique_lock<Costmap2D::mutex_t> lock(*(costmap_.getMutex()));
   size_locked_ = size_locked;
   costmap_.resizeMap(size_x, size_y, resolution, origin_x, origin_y);
+  // Resize all of costmap in this instance
   for (vector<boost::shared_ptr<Layer> >::iterator plugin = plugins_.begin(); plugin != plugins_.end();
       ++plugin)
   {

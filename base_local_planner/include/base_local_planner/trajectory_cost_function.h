@@ -62,6 +62,8 @@ public:
   /**
    * return a score for trajectory traj
    */
+  // Comment by aliben
+  // The method would give a certain trajectory a score(may be under costmap)
   virtual double scoreTrajectory(Trajectory &traj) = 0;
 
   double getScale() {

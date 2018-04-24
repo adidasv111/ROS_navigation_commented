@@ -116,6 +116,7 @@ loadMapFromFile(nav_msgs::GetMap::Response* resp,
     for (i = 0; i < resp->map.info.width; i++)
     {
       // Compute mean of RGB for this pixel
+      // pixel: the header pointer for the map images
       p = pixels + j*rowstride + i*n_channels;
       color_sum = 0;
       for(k=0;k<avg_channels;k++)

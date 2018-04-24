@@ -44,17 +44,22 @@ using namespace costmap_2d;
 namespace base_local_planner {
   CostmapModel::CostmapModel(const Costmap2D& ma) : costmap_(ma) {}
 
-  double CostmapModel::footprintCost(const geometry_msgs::Point& position, const std::vector<geometry_msgs::Point>& footprint, 
-      double inscribed_radius, double circumscribed_radius){
+  double CostmapModel::footprintCost(const geometry_msgs::Point& position,
+                                     const std::vector<geometry_msgs::Point>& footprint,
+                                     double inscribed_radius,
+                                     double circumscribed_radius){
 
     //used to put things into grid coordinates
     unsigned int cell_x, cell_y;
 
     //get the cell coord of the center point of the robot
+      // In global planner, position.x and position.y are the coordinates of a goal
     if(!costmap_.worldToMap(position.x, position.y, cell_x, cell_y))
       return -1.0;
 
     //if number of points in the footprint is less than 3, we'll just assume a circular robot
+    // Footprint is about occupies for robot
+      // if the description for robot doesn't cover an area,  return the goal point cost
     if(footprint.size() < 3){
       unsigned char cost = costmap_.getCost(cell_x, cell_y);
       //if(cost == LETHAL_OBSTACLE || cost == INSCRIBED_INFLATED_OBSTACLE)
@@ -71,6 +76,8 @@ namespace base_local_planner {
     //we need to rasterize each line in the footprint
     for(unsigned int i = 0; i < footprint.size() - 1; ++i){
       //get the cell coord of the first point
+        // =============================================
+        // If robot is outside of the map, return -1
       if(!costmap_.worldToMap(footprint[i].x, footprint[i].y, x0, y0))
         return -1.0;
 

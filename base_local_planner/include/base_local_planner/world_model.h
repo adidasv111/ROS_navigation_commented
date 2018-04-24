@@ -59,10 +59,15 @@ namespace base_local_planner {
        * @param  circumscribed_radius The radius of the circumscribed circle of the robot
        * @return Positive if all the points lie outside the footprint, negative otherwise
        */
-      virtual double footprintCost(const geometry_msgs::Point& position, const std::vector<geometry_msgs::Point>& footprint,
-          double inscribed_radius, double circumscribed_radius) = 0;
+      virtual double footprintCost(const geometry_msgs::Point& position,
+                                   const std::vector<geometry_msgs::Point>& footprint,
+                                   double inscribed_radius,
+                                   double circumscribed_radius) = 0;
 
-      double footprintCost(double x, double y, double theta, const std::vector<geometry_msgs::Point>& footprint_spec, double inscribed_radius = 0.0, double circumscribed_radius=0.0){
+      double footprintCost(double x, double y, double theta,
+                           const std::vector<geometry_msgs::Point>& footprint_spec,
+                           double inscribed_radius = 0.0,
+                           double circumscribed_radius=0.0){
 
         double cos_th = cos(theta);
         double sin_th = sin(theta);
@@ -93,8 +98,11 @@ namespace base_local_planner {
        * @param  circumscribed_radius The radius of the circumscribed circle of the robot
        * @return Positive if all the points lie outside the footprint, negative otherwise
        */
-      double footprintCost(const geometry_msgs::Point& position, const std::vector<geometry_msgs::Point>& footprint,
-          double inscribed_radius, double circumscribed_radius, double extra) {
+      double footprintCost(const geometry_msgs::Point& position,
+                           const std::vector<geometry_msgs::Point>& footprint,
+                           double inscribed_radius,
+                           double circumscribed_radius,
+                           double extra) {
         return footprintCost(position, footprint, inscribed_radius, circumscribed_radius); 
       }
 

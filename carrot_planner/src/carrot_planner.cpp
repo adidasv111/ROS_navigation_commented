@@ -131,6 +131,7 @@ namespace carrot_planner {
     double scale = 1.0;
     double dScale = 0.01;
 
+    // Find a feasible goal till find a position is so close to the ideal goal
     while(!done)
     {
       if(scale < 0)
@@ -153,7 +154,11 @@ namespace carrot_planner {
       scale -=dScale;
     }
 
+    // Add beginning point
     plan.push_back(start);
+
+    //============================================
+    // Add just modified feasible goal
     geometry_msgs::PoseStamped new_goal = goal;
     tf::Quaternion goal_quat = tf::createQuaternionFromYaw(target_yaw);
 
@@ -164,6 +169,7 @@ namespace carrot_planner {
     new_goal.pose.orientation.y = goal_quat.y();
     new_goal.pose.orientation.z = goal_quat.z();
     new_goal.pose.orientation.w = goal_quat.w();
+    //============================================
 
     plan.push_back(new_goal);
     return (done);

@@ -62,6 +62,9 @@ namespace base_local_planner {
         break;
       }
       if (cost != 0) {
+        /**
+         * scale is the factor to sum all cost, it is something like weight
+         */
         cost *= score_function_p->getScale();
       }
       traj_cost += cost;
@@ -84,6 +87,10 @@ namespace base_local_planner {
     double loop_traj_cost, best_traj_cost = -1;
     bool gen_success;
     int count, count_valid;
+    /**
+     * ======================================================================
+     * initialize each costmap critic
+     */
     for (std::vector<TrajectoryCostFunction*>::iterator loop_critic = critics_.begin(); loop_critic != critics_.end(); ++loop_critic) {
       TrajectoryCostFunction* loop_critic_p = *loop_critic;
       if (loop_critic_p->prepare() == false) {
@@ -91,23 +98,35 @@ namespace base_local_planner {
         return false;
       }
     }
+    /** If any layer costmap initialize failed, the process will be return, no best trajectory find.
+     *  =======================================================================
+     */
 
+    /** (NOTE: aliben.develop@gmail.com)
+     * ========================================================================
+     * Using different trajectory generator
+     */
     for (std::vector<TrajectorySampleGenerator*>::iterator loop_gen = gen_list_.begin(); loop_gen != gen_list_.end(); ++loop_gen) {
       count = 0;
       count_valid = 0;
       TrajectorySampleGenerator* gen_ = *loop_gen;
+      // Use certain trajectory generator to get trajectories(a vector of restoring pose, vel )
       while (gen_->hasMoreTrajectories()) {
+        // Generate a traj(one step)
         gen_success = gen_->nextTrajectory(loop_traj);
         if (gen_success == false) {
           // TODO use this for debugging
           continue;
         }
+        // Evaluate the traj just generated(one step)
         loop_traj_cost = scoreTrajectory(loop_traj, best_traj_cost);
         if (all_explored != NULL) {
+          // Restore this traj
           loop_traj.cost_ = loop_traj_cost;
           all_explored->push_back(loop_traj);
         }
 
+        // Update the best_traj.
         if (loop_traj_cost >= 0) {
           count_valid++;
           if (best_traj_cost < 0 || loop_traj_cost < best_traj_cost) {
@@ -120,6 +139,8 @@ namespace base_local_planner {
           break;
         }        
       }
+      // ====================================
+      // Write best_traj into traj with which will be used for controller
       if (best_traj_cost >= 0) {
         traj.xv_ = best_traj.xv_;
         traj.yv_ = best_traj.yv_;

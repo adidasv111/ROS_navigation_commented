@@ -151,6 +151,7 @@ namespace dwa_local_planner {
       double pdist_scale_, gdist_scale_, occdist_scale_;
       Eigen::Vector3f vsamples_;
 
+      // The frequence_time of Simulation for DWA using velocity
       double sim_period_;///< @brief The number of seconds to use to compute max/min vels for dwa
       base_local_planner::Trajectory result_traj_;
 

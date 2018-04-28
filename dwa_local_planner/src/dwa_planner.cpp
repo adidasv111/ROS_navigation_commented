@@ -115,6 +115,9 @@ namespace dwa_local_planner {
 
   }
 
+    //==========================================================
+    // Constructor a DWAPlanner
+    //==========================================================
   DWAPlanner::DWAPlanner(std::string name, base_local_planner::LocalPlannerUtil *planner_util) :
       planner_util_(planner_util),
       obstacle_costs_(planner_util->getCostmap()),
@@ -125,6 +128,9 @@ namespace dwa_local_planner {
   {
     ros::NodeHandle private_nh("~/" + name);
 
+    /* NOTE:(aliben.develop@gmail.com)
+     * if use goal_front_cost and alignment_cost map
+     */
     goal_front_costs_.setStopOnFailure( false );
     alignment_costs_.setStopOnFailure( false );
 
@@ -132,11 +138,17 @@ namespace dwa_local_planner {
     //just do an upward search for the frequency at which its being run. This
     //also allows the frequency to be overwritten locally.
     std::string controller_frequency_param_name;
+    /** (NOTE: aliben.develop@gmail.com)
+     * if sim_period has not been set, set a default value with it.
+     */
     if(!private_nh.searchParam("controller_frequency", controller_frequency_param_name)) {
       sim_period_ = 0.05;
     } else {
       double controller_frequency = 0;
       private_nh.param(controller_frequency_param_name, controller_frequency, 20.0);
+      /** (NOTE: aliben.develop@gmail.com)
+       * if frequency is greater than 0, then set it, otherwise set a default value with it.
+       */
       if(controller_frequency > 0) {
         sim_period_ = 1.0 / controller_frequency;
       } else {
@@ -146,8 +158,16 @@ namespace dwa_local_planner {
     }
     ROS_INFO("Sim period is set to %.2f", sim_period_);
 
+    /** (NOTE:aliben.develop@gmail.com)
+     * ==============================================================================================================
+     * Initialization parameters
+     */
     oscillation_costs_.resetOscillationFlags();
 
+    /** (NTOE: aliben.develop@gmail.com)
+     * ==============================================================================================================
+     * Set the mode of calculate cost, if use sum method with all cost weights
+     */
     bool sum_scores;
     private_nh.param("sum_scores", sum_scores, false);
     obstacle_costs_.setSumScores(sum_scores);
@@ -164,6 +184,10 @@ namespace dwa_local_planner {
     traj_cloud_pub_.advertise(private_nh, "trajectory_cloud", 1);
     private_nh.param("publish_traj_pc", publish_traj_pc_, false);
 
+    /** (NOTE: aliben.develop@gmail.com)
+     * ==============================================================================================================
+     * restore all costmap into critics
+     */
     // set up all the cost functions that will be applied in order
     // (any function returning negative values will abort scoring, so the order can improve performance)
     std::vector<base_local_planner::TrajectoryCostFunction*> critics;
@@ -204,7 +228,8 @@ namespace dwa_local_planner {
     return true;
   }
 
-  bool DWAPlanner::setPlan(const std::vector<geometry_msgs::PoseStamped>& orig_global_plan) {
+  bool DWAPlanner::setPlan(const std::vector<geometry_msgs::PoseStamped>& orig_global_plan)
+  {
     oscillation_costs_.resetOscillationFlags();
     return planner_util_->setPlan(orig_global_plan);
   }
@@ -216,21 +241,32 @@ namespace dwa_local_planner {
   bool DWAPlanner::checkTrajectory(
       Eigen::Vector3f pos,
       Eigen::Vector3f vel,
-      Eigen::Vector3f vel_samples){
+      Eigen::Vector3f vel_samples)
+  {
     oscillation_costs_.resetOscillationFlags();
     base_local_planner::Trajectory traj;
     geometry_msgs::PoseStamped goal_pose = global_plan_.back();
     Eigen::Vector3f goal(goal_pose.pose.position.x, goal_pose.pose.position.y, tf::getYaw(goal_pose.pose.orientation));
     base_local_planner::LocalPlannerLimits limits = planner_util_->getCurrentLimits();
+
     generator_.initialise(pos,
-        vel,
-        goal,
-        &limits,
-        vsamples_);
+                          vel,
+                          goal,
+                          &limits,
+                          vsamples_);
+
+    // calculate single trajectory, not full trajectory
+    /** (NOTE: aliben.develop@gmail.com)
+     * =============================================================================
+     * given current position, velocity of robot and simulation velocity
+     * and then generate local trajectory
+     * and then evaluate the trajectory
+     */
     generator_.generateTrajectory(pos, vel, vel_samples, traj);
     double cost = scored_sampling_planner_.scoreTrajectory(traj, -1);
     //if the trajectory is a legal one... the check passes
     if(cost >= 0) {
+      // if the trajectory is valid, then return a true flag that means the trajectory is ok
       return true;
     }
     ROS_WARN("Invalid Trajectory %f, %f, %f, cost: %f", vel_samples[0], vel_samples[1], vel_samples[2], cost);
@@ -269,20 +305,22 @@ namespace dwa_local_planner {
     // robot needs to make a 180 degree turn at the end
     std::vector<geometry_msgs::PoseStamped> front_global_plan = global_plan_;
     double angle_to_goal = atan2(goal_pose.pose.position.y - pos[1], goal_pose.pose.position.x - pos[0]);
-    front_global_plan.back().pose.position.x = front_global_plan.back().pose.position.x +
-      forward_point_distance_ * cos(angle_to_goal);
-    front_global_plan.back().pose.position.y = front_global_plan.back().pose.position.y + forward_point_distance_ *
-      sin(angle_to_goal);
+    // What is the front global plan, and what is the front global cost
+    front_global_plan.back().pose.position.x = front_global_plan.back().pose.position.x + forward_point_distance_ * cos(angle_to_goal);
+    front_global_plan.back().pose.position.y = front_global_plan.back().pose.position.y + forward_point_distance_ * sin(angle_to_goal);
 
     goal_front_costs_.setTargetPoses(front_global_plan);
     
     // keeping the nose on the path
-    if (sq_dist > forward_point_distance_ * forward_point_distance_ * cheat_factor_) {
+    if (sq_dist > forward_point_distance_ * forward_point_distance_ * cheat_factor_)
+    {
       double resolution = planner_util_->getCostmap()->getResolution();
       alignment_costs_.setScale(resolution * pdist_scale_ * 0.5);
       // costs for robot being aligned with path (nose on path, not ju
       alignment_costs_.setTargetPoses(global_plan_);
-    } else {
+    }
+    else
+    {
       // once we are close to goal, trying to keep the nose close to anything destabilizes behavior.
       alignment_costs_.setScale(0.0);
     }
@@ -303,6 +341,10 @@ namespace dwa_local_planner {
     //make sure that our configuration doesn't change mid-run
     boost::mutex::scoped_lock l(configuration_mutex_);
 
+    /** (NOTE: aliben.develop@gmail.com)
+     *  Get current position and velocity of robot
+     *  and also the goal of robot(local or global goal?)
+     */
     Eigen::Vector3f pos(global_pose.getOrigin().getX(), global_pose.getOrigin().getY(), tf::getYaw(global_pose.getRotation()));
     Eigen::Vector3f vel(global_vel.getOrigin().getX(), global_vel.getOrigin().getY(), tf::getYaw(global_vel.getRotation()));
     geometry_msgs::PoseStamped goal_pose = global_plan_.back();
@@ -311,10 +353,10 @@ namespace dwa_local_planner {
 
     // prepare cost functions and generators for this run
     generator_.initialise(pos,
-        vel,
-        goal,
-        &limits,
-        vsamples_);
+                          vel,
+                          goal,
+                          &limits,
+                          vsamples_);
 
     result_traj_.cost_ = -7;
     // find best trajectory by sampling and scoring the samples

@@ -47,10 +47,11 @@ void SimpleTrajectoryGenerator::initialise(
     const Eigen::Vector3f& pos,
     const Eigen::Vector3f& vel,
     const Eigen::Vector3f& goal,
-    base_local_planner::LocalPlannerLimits* limits,
+    base_local_planner::LocalPlannerLimits* limits, // Limits of velocity and acceleration
     const Eigen::Vector3f& vsamples,
     std::vector<Eigen::Vector3f> additional_samples,
-    bool discretize_by_time) {
+    bool discretize_by_time) // Discrete time?
+{
   initialise(pos, vel, goal, limits, vsamples, discretize_by_time);
   // add static samples if any
   sample_params_.insert(sample_params_.end(), additional_samples.begin(), additional_samples.end());
@@ -62,7 +63,7 @@ void SimpleTrajectoryGenerator::initialise(
     const Eigen::Vector3f& vel,
     const Eigen::Vector3f& goal,
     base_local_planner::LocalPlannerLimits* limits,
-    const Eigen::Vector3f& vsamples,
+    const Eigen::Vector3f& vsamples, // the number of velocity sampling, the name is weird
     bool discretize_by_time) {
   /*
    * We actually generate all velocity sample vectors here, from which to generate trajectories later on
@@ -105,6 +106,7 @@ void SimpleTrajectoryGenerator::initialise(
       min_vel[2] = std::max(min_vel_th, vel[2] - acc_lim[2] * sim_time_);
     } else {
       // with dwa do not accelerate beyond the first step, we only sample within velocities we reach in sim_period
+      // sim_period_ is only for dwa
       max_vel[0] = std::min(max_vel_x, vel[0] + acc_lim[0] * sim_period_);
       max_vel[1] = std::min(max_vel_y, vel[1] + acc_lim[1] * sim_period_);
       max_vel[2] = std::min(max_vel_th, vel[2] + acc_lim[2] * sim_period_);
@@ -114,6 +116,7 @@ void SimpleTrajectoryGenerator::initialise(
       min_vel[2] = std::max(min_vel_th, vel[2] - acc_lim[2] * sim_period_);
     }
 
+    // Create sampling sapce which include velocity.x velocity.y and theta
     Eigen::Vector3f vel_samp = Eigen::Vector3f::Zero();
     VelocityIterator x_it(min_vel[0], max_vel[0], vsamples[0]);
     VelocityIterator y_it(min_vel[1], max_vel[1], vsamples[1]);
@@ -182,6 +185,7 @@ bool SimpleTrajectoryGenerator::generateTrajectory(
       Eigen::Vector3f vel,
       Eigen::Vector3f sample_target_vel,
       base_local_planner::Trajectory& traj) {
+      // Calculate the longest side of a triangle composed by velocity.x velocity.y
   double vmag = hypot(sample_target_vel[0], sample_target_vel[1]);
   double eps = 1e-4;
   traj.cost_   = -1.0; // placed here in case we return early

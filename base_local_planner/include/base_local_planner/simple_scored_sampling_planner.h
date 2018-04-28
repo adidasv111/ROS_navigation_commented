@@ -93,7 +93,6 @@ public:
    */
   bool findBestTrajectory(Trajectory& traj, std::vector<Trajectory>* all_explored = 0);
 
-
 private:
   std::vector<TrajectorySampleGenerator*> gen_list_;
   std::vector<TrajectoryCostFunction*> critics_;

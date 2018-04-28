@@ -12,9 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21ac953f-6a4e-4a9d-9384-e22f4d477e3e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/base_local_planner/include/base_local_planner/world_model.h" afterPath="$PROJECT_DIR$/base_local_planner/include/base_local_planner/world_model.h" />
-      <change beforePath="$PROJECT_DIR$/base_local_planner/src/costmap_model.cpp" afterPath="$PROJECT_DIR$/base_local_planner/src/costmap_model.cpp" />
-      <change beforePath="$PROJECT_DIR$/map_server/src/image_loader.cpp" afterPath="$PROJECT_DIR$/map_server/src/image_loader.cpp" />
+      <change beforePath="$PROJECT_DIR$/base_local_planner/include/base_local_planner/simple_scored_sampling_planner.h" afterPath="$PROJECT_DIR$/base_local_planner/include/base_local_planner/simple_scored_sampling_planner.h" />
+      <change beforePath="$PROJECT_DIR$/base_local_planner/src/simple_scored_sampling_planner.cpp" afterPath="$PROJECT_DIR$/base_local_planner/src/simple_scored_sampling_planner.cpp" />
+      <change beforePath="$PROJECT_DIR$/base_local_planner/src/simple_trajectory_generator.cpp" afterPath="$PROJECT_DIR$/base_local_planner/src/simple_trajectory_generator.cpp" />
+      <change beforePath="$PROJECT_DIR$/carrot_planner/src/carrot_planner.cpp" afterPath="$PROJECT_DIR$/carrot_planner/src/carrot_planner.cpp" />
+      <change beforePath="$PROJECT_DIR$/dwa_local_planner/include/dwa_local_planner/dwa_planner.h" afterPath="$PROJECT_DIR$/dwa_local_planner/include/dwa_local_planner/dwa_planner.h" />
+      <change beforePath="$PROJECT_DIR$/dwa_local_planner/src/dwa_planner.cpp" afterPath="$PROJECT_DIR$/dwa_local_planner/src/dwa_planner.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,105 +27,227 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="dwa_planner.h" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/dwa_local_planner/include/dwa_local_planner/dwa_planner.h">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1480">
+                    <caret line="160" column="0" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="local_planner_util.cpp" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/src/local_planner_util.cpp">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="211">
+                    <caret line="76" column="38" lean-forward="false" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="goal_functions.cpp" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/src/goal_functions.cpp">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="-5">
+                    <caret line="145" column="39" lean-forward="false" selection-start-line="145" selection-start-column="39" selection-end-line="145" selection-end-column="39" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="map_grid_cost_function.h" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/map_grid_cost_function.h">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="-334">
+                    <caret line="75" column="26" lean-forward="false" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="map_grid_cost_function.cpp" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/src/map_grid_cost_function.cpp">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="656">
+                    <caret line="54" column="26" lean-forward="false" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
+                    <folding>
+                      <element signature="e#2502#2729#0" expanded="false" />
+                      <element signature="e#2731#2876#0" expanded="false" />
+                      <element signature="e#2878#4328#0" expanded="false" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="obstacle_cost_function.cpp" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/src/obstacle_cost_function.cpp">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="350">
+                    <caret line="44" column="33" lean-forward="false" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+                    <folding>
+                      <element signature="e#1981#2201#0" expanded="false" />
+                      <element signature="e#2203#2311#0" expanded="false" />
+                      <element signature="e#2314#2581#0" expanded="false" />
+                      <element signature="e#2583#2712#0" expanded="false" />
+                      <element signature="e#2714#2769#0" expanded="false" />
+                      <element signature="e#2771#3494#0" expanded="false" />
+                      <element signature="e#3496#4092#0" expanded="false" />
+                      <element signature="e#4094#4886#0" expanded="false" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="oscillation_cost_function.h" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/oscillation_cost_function.h">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="319">
+                    <caret line="45" column="65" lean-forward="false" selection-start-line="45" selection-start-column="65" selection-end-line="45" selection-end-column="65" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="simple_trajectory_generator.cpp" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/src/simple_trajectory_generator.cpp">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="2452">
+                    <caret line="212" column="15" lean-forward="false" selection-start-line="212" selection-start-column="15" selection-end-line="212" selection-end-column="15" />
+                    <folding>
+                      <element signature="e#1829#1888#0" expanded="true" />
+                      <element signature="e#6132#6514#0" expanded="false" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="simple_trajectory_generator.h" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/simple_trajectory_generator.h">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1570">
+                    <caret line="113" column="37" lean-forward="false" selection-start-line="113" selection-start-column="37" selection-end-line="113" selection-end-column="37" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="carrot_planner.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/carrot_planner/src/carrot_planner.cpp">
+      <file leaf-file-name="local_planner_limits.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/local_planner_limits.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="49" column="9" lean-forward="false" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dwa_planner_ros.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dwa_local_planner/src/dwa_planner_ros.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1124">
+              <caret line="74" column="42" lean-forward="true" selection-start-line="74" selection-start-column="42" selection-end-line="74" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dwa_planner.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dwa_local_planner/src/dwa_planner.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2520">
+              <caret line="363" column="60" lean-forward="false" selection-start-line="363" selection-start-column="48" selection-end-line="363" selection-end-column="60" />
+              <folding>
+                <element signature="e#2144#4689#0" expanded="false" />
+                <element signature="e#4695#9254#0" expanded="false" />
+                <element signature="e#11900#14280#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="costmap_2d_ros.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/costmap_2d_ros.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1260">
+              <caret line="82" column="5" lean-forward="false" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
+              <folding>
+                <element signature="e#2292#2645#1" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simple_scored_sampling_planner.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base_local_planner/src/simple_scored_sampling_planner.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="61">
+              <caret line="83" column="54" lean-forward="false" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="54" />
+              <folding>
+                <element signature="e#2217#3373#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="trajectory.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base_local_planner/src/trajectory.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="576">
-              <caret line="153" column="5" lean-forward="true" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
+              <caret line="64" column="19" lean-forward="false" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="carrot_planner.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/carrot_planner/include/carrot_planner/carrot_planner.h">
+      <file leaf-file-name="trajectory.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/trajectory.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="77" column="6" lean-forward="false" selection-start-line="77" selection-start-column="6" selection-end-line="77" selection-end-column="6" />
-              <folding>
-                <element signature="e#2573#2637#0" expanded="false" />
-                <element signature="e#2667#2871#0" expanded="false" />
-                <element signature="e#2957#3173#0" expanded="false" />
-                <element signature="e#3261#3531#0" expanded="false" />
-                <element signature="e#3954#4248#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="world_model.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/world_model.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="684">
-              <caret line="89" column="24" lean-forward="false" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
-              <folding>
-                <element signature="e#4286#5244#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="costmap_model.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base_local_planner/src/costmap_model.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="138" column="25" lean-forward="false" selection-start-line="138" selection-start-column="25" selection-end-line="138" selection-end-column="25" />
+            <state relative-caret-position="486">
+              <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="layer.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/layer.h">
+      <file leaf-file-name="costmap_2d_ros.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d_ros.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="92" column="5" lean-forward="true" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="costmap_2d.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/costmap_2d.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1067">
-              <caret line="276" column="50" lean-forward="true" selection-start-line="276" selection-start-column="50" selection-end-line="276" selection-end-column="50" />
+            <state relative-caret-position="1225">
+              <caret line="455" column="0" lean-forward="false" selection-start-line="455" selection-start-column="0" selection-end-line="455" selection-end-column="0" />
               <folding>
-                <element signature="e#1941#1958#0" expanded="true" />
-                <element signature="e#10130#10288#0" expanded="false" />
-                <element signature="e#10437#10484#0" expanded="false" />
-                <element signature="e#11249#11269#0" expanded="true" />
-                <element signature="e#10499#12159#0" expanded="false" />
-                <element signature="e#12665#13068#0" expanded="false" />
-                <element signature="e#13079#13097#0" expanded="true" />
-                <element signature="e#12665#14162#0" expanded="false" />
-                <element signature="e#14175#14861#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="costmap_2d.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="191" column="32" lean-forward="false" selection-start-line="191" selection-start-column="25" selection-end-line="191" selection-end-column="32" />
-              <folding>
-                <element signature="e#1973#2420#0" expanded="false" />
-                <element signature="e#2422#2559#0" expanded="false" />
-                <element signature="e#2561#2747#0" expanded="false" />
-                <element signature="e#2749#3103#0" expanded="false" />
-                <element signature="e#3105#3261#0" expanded="false" />
-                <element signature="e#3263#3588#0" expanded="false" />
-                <element signature="e#3590#4837#0" expanded="false" />
-                <element signature="e#4839#5330#0" expanded="false" />
-                <element signature="e#5332#5441#0" expanded="false" />
-                <element signature="e#5443#5640#0" expanded="false" />
-                <element signature="e#5642#5703#0" expanded="false" />
-                <element signature="e#5705#5863#0" expanded="false" />
+                <element signature="e#2076#2371#0" expanded="false" />
+                <element signature="e#2373#7005#0" expanded="false" />
+                <element signature="e#7007#7158#0" expanded="false" />
+                <element signature="e#7160#7429#0" expanded="false" />
+                <element signature="e#7431#9927#0" expanded="false" />
+                <element signature="e#9929#11419#0" expanded="false" />
+                <element signature="e#11421#12471#0" expanded="false" />
+                <element signature="e#12473#12741#0" expanded="false" />
+                <element signature="e#12743#13460#0" expanded="false" />
+                <element signature="e#13462#14732#0" expanded="false" />
+                <element signature="e#14734#15355#0" expanded="false" />
+                <element signature="e#15357#15967#0" expanded="false" />
+                <element signature="e#15969#16337#0" expanded="false" />
+                <element signature="e#16339#16417#0" expanded="false" />
+                <element signature="e#16419#16619#0" expanded="false" />
+                <element signature="e#16622#17018#0" expanded="false" />
+                <element signature="e#17020#18342#0" expanded="false" />
+                <element signature="e#18344#18731#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -138,6 +263,9 @@
       <find>[]</find>
       <find>data_type</find>
       <find>getCost</find>
+      <find>sum_scores_</find>
+      <find>scale</find>
+      <find>checkTrajectory</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -149,8 +277,13 @@
         <option value="$PROJECT_DIR$/move_base/include/move_base/move_base.h" />
         <option value="$PROJECT_DIR$/map_server/src/image_loader.cpp" />
         <option value="$PROJECT_DIR$/base_local_planner/include/base_local_planner/world_model.h" />
-        <option value="$PROJECT_DIR$/carrot_planner/src/carrot_planner.cpp" />
         <option value="$PROJECT_DIR$/base_local_planner/src/costmap_model.cpp" />
+        <option value="$PROJECT_DIR$/carrot_planner/src/carrot_planner.cpp" />
+        <option value="$PROJECT_DIR$/dwa_local_planner/include/dwa_local_planner/dwa_planner.h" />
+        <option value="$PROJECT_DIR$/base_local_planner/src/simple_trajectory_generator.cpp" />
+        <option value="$PROJECT_DIR$/base_local_planner/include/base_local_planner/simple_scored_sampling_planner.h" />
+        <option value="$PROJECT_DIR$/dwa_local_planner/src/dwa_planner.cpp" />
+        <option value="$PROJECT_DIR$/base_local_planner/src/simple_scored_sampling_planner.cpp" />
       </list>
     </option>
   </component>
@@ -160,6 +293,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="7" fullScreen="true">
     <option name="x" value="786" />
     <option name="y" value="356" />
@@ -191,6 +325,29 @@
             <path>
               <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="amcl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="base_local_planner" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="base_local_planner" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="base_local_planner" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="base_local_planner" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
               <item name="costmap_2d" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -210,6 +367,117 @@
               <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="navigation" type="462c0819:PsiDirectoryNode" />
               <item name="costmap_2d" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="dwa_local_planner" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="dwa_local_planner" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="dwa_local_planner" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="dwa_local_planner" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="dwa_local_planner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="move_base" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="move_base" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="move_base" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="move_base" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="move_base" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="move_slow_and_clear" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="move_slow_and_clear" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="move_slow_and_clear" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="move_slow_and_clear" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="navfn" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="rotate_recovery" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="rotate_recovery" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="voxel_grid" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="voxel_grid" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="voxel_grid" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="voxel_grid" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="navigation" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="voxel_grid" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -264,12 +532,12 @@
       <workItem from="1524108906265" duration="10000" />
       <workItem from="1524108427612" duration="708000" />
       <workItem from="1524215204712" duration="182000" />
-      <workItem from="1524452625779" duration="24762000" />
+      <workItem from="1524452625779" duration="64789000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32226000" />
+    <option name="totallyTimeSpent" value="72253000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="183" width="1920" height="1117" extended-state="7" />
@@ -280,7 +548,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17601332" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -308,207 +576,15 @@
           <line>477</line>
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/layered_costmap.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/observation.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/observation_buffer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/obstacle_layer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/static_layer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/testing_helper.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/voxel_layer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/array_parser.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d_cloud.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d_markers.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d_publisher.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_layer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_math.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/footprint.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/layer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/layered_costmap.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/global_planner/src/planner_core.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="49" column="37" lean-forward="false" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/global_planner/src/plan_node.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/global_planner/src/quadratic_calculator.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="38" column="27" lean-forward="false" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/move_base/src/move_base.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d_node.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/map_cell.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="41" column="57" lean-forward="false" selection-start-line="41" selection-start-column="57" selection-end-line="41" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/map_grid.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="156" column="92" lean-forward="false" selection-start-line="156" selection-start-column="92" selection-end-line="156" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/map_grid_cost_function.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="64" column="29" lean-forward="false" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fake_localization/fake_localization.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-864">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/move_base/include/move_base/move_base.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="118" column="9" lean-forward="true" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/voxel_grid/include/voxel_grid/voxel_grid.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -573,34 +649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d_ros.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-77">
-          <caret line="74" column="21" lean-forward="true" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
-          <folding>
-            <element signature="e#1874#1913#0" expanded="true" />
-            <element signature="e#2076#2371#0" expanded="false" />
-            <element signature="e#2373#7005#0" expanded="false" />
-            <element signature="e#7007#7158#0" expanded="false" />
-            <element signature="e#7160#7429#0" expanded="false" />
-            <element signature="e#7431#9927#0" expanded="false" />
-            <element signature="e#9929#11419#0" expanded="false" />
-            <element signature="e#11421#12471#0" expanded="false" />
-            <element signature="e#12473#12741#0" expanded="false" />
-            <element signature="e#12743#13460#0" expanded="false" />
-            <element signature="e#13462#14732#0" expanded="false" />
-            <element signature="e#14734#15355#0" expanded="false" />
-            <element signature="e#15357#15967#0" expanded="false" />
-            <element signature="e#15969#16337#0" expanded="false" />
-            <element signature="e#16339#16417#0" expanded="false" />
-            <element signature="e#16419#16619#0" expanded="false" />
-            <element signature="e#16622#17018#0" expanded="false" />
-            <element signature="e#17020#18342#0" expanded="false" />
-            <element signature="e#18344#18731#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/footprint_helper.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="701">
@@ -611,36 +659,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/costmap_2d_ros.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="78" column="5" lean-forward="true" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
-          <folding>
-            <element signature="e#2292#2645#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/local_planner_util.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-936">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/costmap_layer.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="39" column="20" lean-forward="true" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dwa_local_planner/include/dwa_local_planner/dwa_planner.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
-          <caret line="68" column="28" lean-forward="false" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -658,13 +680,13 @@
         <state relative-caret-position="-1067">
           <caret line="276" column="50" lean-forward="true" selection-start-line="276" selection-start-column="50" selection-end-line="276" selection-end-column="50" />
           <folding>
-            <element signature="e#1941#1958#0" expanded="true" />
+            <element signature="e#1941#1958#0" expanded="false" />
             <element signature="e#10130#10288#0" expanded="false" />
             <element signature="e#10437#10484#0" expanded="false" />
-            <element signature="e#11249#11269#0" expanded="true" />
+            <element signature="e#11249#11269#0" expanded="false" />
             <element signature="e#10499#12159#0" expanded="false" />
             <element signature="e#12665#13068#0" expanded="false" />
-            <element signature="e#13079#13097#0" expanded="true" />
+            <element signature="e#13079#13097#0" expanded="false" />
             <element signature="e#12665#14162#0" expanded="false" />
             <element signature="e#14175#14861#0" expanded="false" />
           </folding>
@@ -674,7 +696,7 @@
     <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/layer.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
-          <caret line="92" column="5" lean-forward="true" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
+          <caret line="92" column="5" lean-forward="false" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -684,20 +706,6 @@
         <state relative-caret-position="0">
           <caret line="48" column="5" lean-forward="true" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/carrot_planner/include/carrot_planner/carrot_planner.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="77" column="6" lean-forward="false" selection-start-line="77" selection-start-column="6" selection-end-line="77" selection-end-column="6" />
-          <folding>
-            <element signature="e#2573#2637#0" expanded="false" />
-            <element signature="e#2667#2871#0" expanded="false" />
-            <element signature="e#2957#3173#0" expanded="false" />
-            <element signature="e#3261#3531#0" expanded="false" />
-            <element signature="e#3954#4248#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -756,11 +764,314 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/carrot_planner/include/carrot_planner/carrot_planner.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="597">
+          <caret line="85" column="21" lean-forward="false" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="21" />
+          <folding>
+            <element signature="e#2573#2637#0" expanded="false" />
+            <element signature="e#2667#2871#0" expanded="false" />
+            <element signature="e#2957#3173#0" expanded="false" />
+            <element signature="e#3261#3531#0" expanded="false" />
+            <element signature="e#3954#4248#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global_planner/include/global_planner/astar.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="31" column="26" lean-forward="false" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global_planner/include/global_planner/dijkstra.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voxel_grid/include/voxel_grid/voxel_grid.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="30" column="23" lean-forward="false" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/carrot_planner/src/carrot_planner.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="153" column="5" lean-forward="true" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
+        <state relative-caret-position="450">
+          <caret line="25" column="57" lean-forward="false" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
+          <folding>
+            <element signature="e#2047#6709#0" expanded="false" />
+            <element signature="e#2921#3578#0" expanded="false" />
+            <element signature="e#3583#6706#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/velocity_iterator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="834">
+          <caret line="88" column="23" lean-forward="true" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
+          <folding>
+            <element signature="e#2177#3110#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/local_planner_util.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="61" column="20" lean-forward="false" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/x86_64-linux-gnu/bits/mathcalls.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="161" column="51" lean-forward="false" selection-start-line="161" selection-start-column="51" selection-end-line="161" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/costmap_2d/src/costmap_2d_ros.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1225">
+          <caret line="455" column="0" lean-forward="false" selection-start-line="455" selection-start-column="0" selection-end-line="455" selection-end-column="0" />
+          <folding>
+            <element signature="e#2076#2371#0" expanded="false" />
+            <element signature="e#2373#7005#0" expanded="false" />
+            <element signature="e#7007#7158#0" expanded="false" />
+            <element signature="e#7160#7429#0" expanded="false" />
+            <element signature="e#7431#9927#0" expanded="false" />
+            <element signature="e#9929#11419#0" expanded="false" />
+            <element signature="e#11421#12471#0" expanded="false" />
+            <element signature="e#12473#12741#0" expanded="false" />
+            <element signature="e#12743#13460#0" expanded="false" />
+            <element signature="e#13462#14732#0" expanded="false" />
+            <element signature="e#14734#15355#0" expanded="false" />
+            <element signature="e#15357#15967#0" expanded="false" />
+            <element signature="e#15969#16337#0" expanded="false" />
+            <element signature="e#16339#16417#0" expanded="false" />
+            <element signature="e#16419#16619#0" expanded="false" />
+            <element signature="e#16622#17018#0" expanded="false" />
+            <element signature="e#17020#18342#0" expanded="false" />
+            <element signature="e#18344#18731#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/map_grid.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="55" column="9" lean-forward="true" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/obstacle_cost_function.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="74" column="37" lean-forward="true" selection-start-line="74" selection-start-column="37" selection-end-line="74" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/src/local_planner_util.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="76" column="38" lean-forward="false" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/src/goal_functions.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="145" column="39" lean-forward="false" selection-start-line="145" selection-start-column="39" selection-end-line="145" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/src/obstacle_cost_function.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="44" column="33" lean-forward="false" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+          <folding>
+            <element signature="e#1981#2201#0" expanded="false" />
+            <element signature="e#2203#2311#0" expanded="false" />
+            <element signature="e#2314#2581#0" expanded="false" />
+            <element signature="e#2583#2712#0" expanded="false" />
+            <element signature="e#2714#2769#0" expanded="false" />
+            <element signature="e#2771#3494#0" expanded="false" />
+            <element signature="e#3496#4092#0" expanded="false" />
+            <element signature="e#4094#4886#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/oscillation_cost_function.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="45" column="65" lean-forward="false" selection-start-line="45" selection-start-column="65" selection-end-line="45" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/map_grid_cost_function.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-334">
+          <caret line="75" column="26" lean-forward="false" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/costmap_2d/include/costmap_2d/costmap_2d_ros.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="82" column="5" lean-forward="false" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
+          <folding>
+            <element signature="e#2292#2645#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/src/map_grid_cost_function.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="656">
+          <caret line="54" column="26" lean-forward="false" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
+          <folding>
+            <element signature="e#2502#2729#0" expanded="false" />
+            <element signature="e#2731#2876#0" expanded="false" />
+            <element signature="e#2878#4328#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/trajectory_search.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="48" column="6" lean-forward="false" selection-start-line="48" selection-start-column="6" selection-end-line="48" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/simple_scored_sampling_planner.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="57" column="72" lean-forward="false" selection-start-line="57" selection-start-column="72" selection-end-line="57" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/src/trajectory.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="64" column="19" lean-forward="false" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/trajectory_sample_generator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="59" column="24" lean-forward="false" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/trajectory.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/src/simple_trajectory_generator.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2452">
+          <caret line="212" column="15" lean-forward="false" selection-start-line="212" selection-start-column="15" selection-end-line="212" selection-end-column="15" />
+          <folding>
+            <element signature="e#1829#1888#0" expanded="true" />
+            <element signature="e#6132#6514#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/simple_trajectory_generator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1570">
+          <caret line="113" column="37" lean-forward="false" selection-start-line="113" selection-start-column="37" selection-end-line="113" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/trajectory_cost_function.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="63" column="5" lean-forward="true" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/src/simple_scored_sampling_planner.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="61">
+          <caret line="83" column="54" lean-forward="false" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="54" />
+          <folding>
+            <element signature="e#2217#3373#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dwa_local_planner/include/dwa_local_planner/dwa_planner_ros.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="136" column="0" lean-forward="true" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base_local_planner/include/base_local_planner/local_planner_limits.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="49" column="9" lean-forward="false" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dwa_local_planner/src/dwa_planner_ros.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1124">
+          <caret line="74" column="42" lean-forward="true" selection-start-line="74" selection-start-column="42" selection-end-line="74" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dwa_local_planner/include/dwa_local_planner/dwa_planner.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1480">
+          <caret line="160" column="0" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dwa_local_planner/src/dwa_planner.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2520">
+          <caret line="363" column="60" lean-forward="false" selection-start-line="363" selection-start-column="48" selection-end-line="363" selection-end-column="60" />
+          <folding>
+            <element signature="e#2144#4689#0" expanded="false" />
+            <element signature="e#4695#9254#0" expanded="false" />
+            <element signature="e#11900#14280#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

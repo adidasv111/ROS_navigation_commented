@@ -46,6 +46,16 @@ class Traceback {
     public:
         Traceback(PotentialCalculator* p_calc) : p_calc_(p_calc) {}
 
+        /**
+         * @brief Given a potential of the cells, trace a path
+         * @param potential The potential array
+         * @param start_x start x coord
+         * @param start_y start y coord
+         * @param end_x end x coord
+         * @param end_y end y coord
+         * @param path The path... filled by the planner
+         * @return True if a valid path was found, false otherwise
+         */
         virtual bool getPath(float* potential, double start_x, double start_y, double end_x, double end_y, std::vector<std::pair<float, float> >& path) = 0;
         virtual void setSize(int xs, int ys) {
             xs_ = xs;

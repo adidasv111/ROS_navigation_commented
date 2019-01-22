@@ -72,15 +72,18 @@ bool GradientPath::getPath(float* potential, double start_x, double start_y, dou
     // set up offset
     float dx = goal_x - (int)goal_x;
     float dy = goal_y - (int)goal_y;
+    // init arrays
     int ns = xs_ * ys_;
     memset(gradx_, 0, ns * sizeof(float));
     memset(grady_, 0, ns * sizeof(float));
 
     int c = 0;
-    while (c++<ns*4) {
-        // check if near goal
+    while (c++<ns*4)
+    {
+        // get x and y of current cell (similar to index to coord, but we keep the diff between rounds coord to real given coord)
         double nx = stc % xs_ + dx, ny = stc / xs_ + dy;
 
+        // check if near goal
         if (fabs(nx - start_x) < .5 && fabs(ny - start_y) < .5) {
             current.first = start_x;
             current.second = start_y;
@@ -88,7 +91,8 @@ bool GradientPath::getPath(float* potential, double start_x, double start_y, dou
             return true;
         }
 
-        if (stc < xs_ || stc > xs_ * ys_ - xs_) // would be out of bounds
+        // would be out of bounds
+        if (stc < xs_ || stc > xs_ * ys_ - xs_)
         {
             printf("[PathCalc] Out of bounds\n");
             return false;
@@ -113,11 +117,15 @@ bool GradientPath::getPath(float* potential, double start_x, double start_y, dou
         int stcpx = stc - xs_;
 
         // check for potentials at eight positions near cell
+
+        // if any neighbor potential is >= POT_HIGH, then its potential hasn't been calculated => next cell is the neighbor with lowest potential (follow grid)
         if (potential[stc] >= POT_HIGH || potential[stc + 1] >= POT_HIGH || potential[stc - 1] >= POT_HIGH
                 || potential[stcnx] >= POT_HIGH || potential[stcnx + 1] >= POT_HIGH || potential[stcnx - 1] >= POT_HIGH
                 || potential[stcpx] >= POT_HIGH || potential[stcpx + 1] >= POT_HIGH || potential[stcpx - 1] >= POT_HIGH
-                || oscillation_detected) {
+                || oscillation_detected)
+        {
             ROS_DEBUG("[Path] Pot fn boundary, following grid (%0.1f/%d)", potential[stc], (int) path.size());
+
             // check eight neighbors to find the lowest
             int minc = stc;
             int minp = potential[stc];
@@ -161,6 +169,8 @@ bool GradientPath::getPath(float* potential, double start_x, double start_y, dou
                 minp = potential[st];
                 minc = st;
             }
+
+            // set the lowest potential neighbor as next cell
             stc = minc;
             dx = 0;
             dy = 0;
@@ -169,15 +179,15 @@ bool GradientPath::getPath(float* potential, double start_x, double start_y, dou
             //    potential[stc], path[npath-1].first, path[npath-1].second);
 
             if (potential[stc] >= POT_HIGH) {
-                ROS_DEBUG("[PathCalc] No path found, high potential");
+                ROS_DEBUG("[Globalplanner/PathCalc] No path found: high potential all neighbors");
                 //savemap("navfn_highpot");
                 return 0;
             }
         }
 
-        // have a good gradient here
-        else {
-
+        // all neighbors have previously calculated potential
+        else
+        {
             // get grad at four positions near cell
             gradCell(potential, stc);
             gradCell(potential, stc + 1);
@@ -267,14 +277,17 @@ float GradientPath::gradCell(float* potential, int n) {
     if (gradx_[n] + grady_[n] > 0.0)    // check this cell
         return 1.0;
 
-    if (n < xs_ || n > xs_ * ys_ - xs_)    // would be out of bounds
+    // would be out of bounds
+    if (n < xs_ || n > xs_ * ys_ - xs_)
         return 0.0;
+
     float cv = potential[n];
     float dx = 0.0;
     float dy = 0.0;
 
     // check for in an obstacle
-    if (cv >= POT_HIGH) {
+    if (cv >= POT_HIGH)
+    {
         if (potential[n - 1] < POT_HIGH)
             dx = -lethal_cost_;
         else if (potential[n + 1] < POT_HIGH)

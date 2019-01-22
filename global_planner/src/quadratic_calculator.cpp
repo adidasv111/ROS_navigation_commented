@@ -31,7 +31,7 @@
 
 namespace global_planner {
 float QuadraticCalculator::calculatePotential(float* potential, unsigned char cost, int n, float prev_potential) {
-    // get neighbors
+    // get neighbors' potentials
     float u, d, l, r;
     l = potential[n - 1];
     r = potential[n + 1];
@@ -42,6 +42,8 @@ float QuadraticCalculator::calculatePotential(float* potential, unsigned char co
     //  ROS_INFO("[Update] cost: %d\n", costs[n]);
 
     // find lowest, and its lowest neighbor
+    // tc = min(l,r)
+    // ta = min(u,d)
     float ta, tc;
     if (l < r)
         tc = l;
@@ -52,16 +54,16 @@ float QuadraticCalculator::calculatePotential(float* potential, unsigned char co
     else
         ta = d;
 
-    float hf = cost; // traversability factor
-    float dc = tc - ta;        // relative cost between ta,tc
-    if (dc < 0)         // tc is lowest
+    float hf = cost;        // traversability factor
+    float dc = tc - ta;        // relative cost between ta,tc (diagonal)
+    if (dc < 0)         // dc < 0 => tc < ta (tc lowest) => horizontal < veticla => flip between them (flip dc and use tc instead of ta)
             {
         dc = -dc;
         ta = tc;
     }
 
     // calculate new potential
-    if (dc >= hf)        // if too large, use ta-only update
+    if (dc >= hf)        // if dc >= cost => cost between diagonal neighbors >= cell's cost => use linear potential: pot = min_neighbor_pot + cost
         return ta + hf;
     else            // two-neighbor interpolation update
     {

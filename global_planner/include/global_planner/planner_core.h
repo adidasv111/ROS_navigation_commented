@@ -60,10 +60,9 @@ class Expander;
 class GridPath;
 
 /**
- * @class PlannerCore
+ * @class GlobalPlanner
  * @brief Provides a ROS wrapper for the global_planner planner which runs a fast, interpolated navigation function on a costmap.
  */
-
 class GlobalPlanner : public nav_core::BaseGlobalPlanner {
     public:
         /**
@@ -175,12 +174,14 @@ class GlobalPlanner : public nav_core::BaseGlobalPlanner {
         bool initialized_, allow_unknown_, visualize_potential_;
 
     private:
+        // Convert from map coordinates to world coordinates. Difference from Costmap2D is added convert_offset_ ( to be center of cell instead of corner)
         void mapToWorld(double mx, double my, double& wx, double& wy);
+        //  Convert from world coordinates to map coordinates. Difference from Costmap2D is added convert_offset_( to be center of cell instead of corner)
         bool worldToMap(double wx, double wy, double& mx, double& my);
         void clearRobotCell(const tf::Stamped<tf::Pose>& global_pose, unsigned int mx, unsigned int my);
         void publishPotential(float* potential);
 
-        double planner_window_x_, planner_window_y_, default_tolerance_;
+        double planner_window_x_, planner_window_y_, default_tolerance_;    // window is unused
         std::string tf_prefix_;
         boost::mutex mutex_;
         ros::ServiceServer make_plan_srv_;
@@ -195,7 +196,7 @@ class GlobalPlanner : public nav_core::BaseGlobalPlanner {
         int publish_scale_;
 
         void outlineMap(unsigned char* costarr, int nx, int ny, unsigned char value);
-        unsigned char* cost_array_;
+        unsigned char* cost_array_; // not used
         float* potential_array_;
         unsigned int start_x_, start_y_, end_x_, end_y_;
 

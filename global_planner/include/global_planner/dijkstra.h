@@ -83,6 +83,7 @@ class DijkstraExpansion : public Expander {
          */
         void updateCell(unsigned char* costs, float* potential, int n); /** updates the cell at index n */
 
+        /// @brief calculate cell potential value as costmap_cost*factor + neutral_cost. Clip if >= obstacle value
         float getCost(unsigned char* costs, int n) {
             float c = costs[n];
             if (c < lethal_cost_ - 1 || (unknown_ && c==255)) {

@@ -44,6 +44,10 @@
 #include <algorithm>
 
 namespace global_planner {
+/**
+ * @class Index
+ * @brief cell's index and its cost
+ */
 class Index {
     public:
         Index(int a, float b) {

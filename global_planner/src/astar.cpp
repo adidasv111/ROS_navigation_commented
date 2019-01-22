@@ -47,24 +47,29 @@ AStarExpansion::AStarExpansion(PotentialCalculator* p_calc, int xs, int ys) :
 bool AStarExpansion::calculatePotentials(unsigned char* costs, double start_x, double start_y, double end_x, double end_y,
                                         int cycles, float* potential) {
     queue_.clear();
-    int start_i = toIndex(start_x, start_y);
-    queue_.push_back(Index(start_i, 0));
+    int start_i = toIndex(start_x, start_y);    // start index
+    queue_.push_back(Index(start_i, 0));    // add start index with cost 0
 
+    // fill potential for all cells as POT_HIGH
     std::fill(potential, potential + ns_, POT_HIGH);
     potential[start_i] = 0;
 
-    int goal_i = toIndex(end_x, end_y);
+    int goal_i = toIndex(end_x, end_y); // coal index
     int cycle = 0;
 
-    while (queue_.size() > 0 && cycle < cycles) {
-        Index top = queue_[0];
-        std::pop_heap(queue_.begin(), queue_.end(), greater1());
-        queue_.pop_back();
+    // while nodes in queue and not passed max number of expansions
+    while (queue_.size() > 0 && cycle < cycles)
+    {
+        Index top = queue_[0];  //get 1st node i queue
+        std::pop_heap(queue_.begin(), queue_.end(), greater1());    // re-arrange elements from begin() to end() from smallest to second highest, and put highest in last
+        queue_.pop_back();  // remove last element (highest)
 
         int i = top.i;
+        // Stop if reached goal
         if (i == goal_i)
             return true;
 
+        // add 4 neighbors to the queue with their priority value
         add(costs, potential, potential[i], i + 1, end_x, end_y);
         add(costs, potential, potential[i], i - 1, end_x, end_y);
         add(costs, potential, potential[i], i + nx_, end_x, end_y);
@@ -77,20 +82,27 @@ bool AStarExpansion::calculatePotentials(unsigned char* costs, double start_x, d
 }
 
 void AStarExpansion::add(unsigned char* costs, float* potential, float prev_potential, int next_i, int end_x,
-                         int end_y) {
+                         int end_y)
+    {
+    // check neighbor isn't outside the cells array
     if (next_i < 0 || next_i >= ns_)
         return;
 
+    // if next cell potential is smaller than POT_HIGH, it has been already visited -> skip it
     if (potential[next_i] < POT_HIGH)
         return;
 
     if(costs[next_i]>=lethal_cost_ && !(unknown_ && costs[next_i]==costmap_2d::NO_INFORMATION))
         return;
 
+    // get potential (g-value). from quadratic_calculator.cpp
     potential[next_i] = p_calc_->calculatePotential(potential, costs[next_i] + neutral_cost_, next_i, prev_potential);
+
+    // add heuristic cost as Manhattan distance
     int x = next_i % nx_, y = next_i / nx_;
     float distance = abs(end_x - x) + abs(end_y - y);
 
+    // add node next_i to open queue, with priority(next_i) = potential(next_i) + heuristic(next_i) (f(n) = g(n)+h(n))
     queue_.push_back(Index(next_i, potential[next_i] + distance * neutral_cost_));
     std::push_heap(queue_.begin(), queue_.end(), greater1());
 }

@@ -74,17 +74,26 @@ class Expander {
             unknown_ = unknown;
         }
 
-        void clearEndpoint(unsigned char* costs, float* potential, int gx, int gy, int s){
+        // clear cells around endpoint (goal) by calculating their potential if was not calculated by the expander.
+        // to avoid having cells near the goal with invalid potential -> issue when tracing back
+        // gx, gy = goal coordinates
+        // s = cells in each direction to clear
+        // if cell's potential was calculated by expander, skip it
+        // otherwise calculate its potential with increasing its cost by neutral_cost_
+        void clearEndpoint(unsigned char* costs, float* potential, int gx, int gy, int s)
+        {
             int startCell = toIndex(gx, gy);
-            for(int i=-s;i<=s;i++){
-            for(int j=-s;j<=s;j++){
-                int n = startCell+i+nx_*j;
-                if(potential[n]<POT_HIGH)
-                    continue;
-                float c = costs[n]+neutral_cost_;
-                float pot = p_calc_->calculatePotential(potential, c, n);
-                potential[n] = pot;
-            }
+            for(int i=-s;i<=s;i++)
+            {
+                for(int j=-s;j<=s;j++)
+                {
+                    int n = startCell+i+nx_*j;
+                    if(potential[n]<POT_HIGH)
+                        continue;
+                    float c = costs[n]+neutral_cost_;
+                    float pot = p_calc_->calculatePotential(potential, c, n);
+                    potential[n] = pot;
+                }
             }
         }
 

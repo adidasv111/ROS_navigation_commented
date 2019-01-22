@@ -94,16 +94,27 @@ bool DijkstraExpansion::calculatePotentials(unsigned char* costs, double start_x
     // set goal
     int k = toIndex(start_x, start_y);
 
+    // if precise, treat start node as 4 cells around the precise start coordinates
+    // i.e. k, k+1, k+nx, k+nx+1 are the start cells
+    //      k-nx, k-nx+1, k-1, k+2, k+nx-1, k+nx+2, k_2n, k+2nx+1 are the neighbors of the start node
+    /*
+    |----	|k-nx   |k-nx+1	|---- |
+    |k-1	|k	    |k+1	|k+2    |
+    |k+nx-1	|k+nx   |k+nx+1	|k+nx+2 |
+    |----	|k+nx   |k+2nx+1|----    |
+    */
     if(precise_)
     {
-        double dx = start_x - (int)start_x, dy = start_y - (int)start_y;
+        double dx = start_x - (int)start_x, dy = start_y - (int)start_y;    // difference between actual start coords and rounded ones
         dx = floorf(dx * 100 + 0.5) / 100;
         dy = floorf(dy * 100 + 0.5) / 100;
+        // set start node potential based on precise start coords
         potential[k] = neutral_cost_ * 2 * dx * dy;
         potential[k+1] = neutral_cost_ * 2 * (1-dx)*dy;
         potential[k+nx_] = neutral_cost_*2*dx*(1-dy);
         potential[k+nx_+1] = neutral_cost_*2*(1-dx)*(1-dy);//*/
 
+        // add neighbors of start cell to queue
         push_cur(k+2);
         push_cur(k-1);
         push_cur(k+nx_-1);
@@ -114,6 +125,7 @@ bool DijkstraExpansion::calculatePotentials(unsigned char* costs, double start_x
         push_cur(k+nx_*2);
         push_cur(k+nx_*2+1);
     }else{
+        // set potential of start node and add its neighbors to queue
         potential[k] = 0;
         push_cur(k+1);
         push_cur(k-1);
@@ -130,7 +142,7 @@ bool DijkstraExpansion::calculatePotentials(unsigned char* costs, double start_x
 
     for (; cycle < cycles; cycle++) // go for this many cycles, unless interrupted
             {
-        // 
+        //
         if (currentEnd_ == 0 && nextEnd_ == 0) // priority blocks empty
             return false;
 
@@ -168,7 +180,7 @@ bool DijkstraExpansion::calculatePotentials(unsigned char* costs, double start_x
             overBuffer_ = pb;
         }
 
-        // check if we've hit the Start cell
+        // check if we've hit the Start cell (current )
         if (potential[startCell] < POT_HIGH)
             break;
     }
@@ -193,10 +205,11 @@ inline void DijkstraExpansion::updateCell(unsigned char* costs, float* potential
     cells_visited_++;
 
     // do planar wave update
-    float c = getCost(costs, n);
+    float c = getCost(costs, n);    // calculate current cell cost
     if (c >= lethal_cost_)    // don't propagate into obstacles
         return;
 
+    // calculate node potential using its cost
     float pot = p_calc_->calculatePotential(potential, c, n);
 
     // now add affected neighbors to priority blocks

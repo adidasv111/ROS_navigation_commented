@@ -139,7 +139,7 @@ void GlobalPlanner::initialize(std::string name, costmap_2d::Costmap2D* costmap,
             path_maker_ = new GridPath(p_calc_);
         else
             path_maker_ = new GradientPath(p_calc_);
-            
+
         orientation_filter_ = new OrientationFilter();
 
         // by aliben
@@ -238,8 +238,10 @@ bool GlobalPlanner::makePlan(const geometry_msgs::PoseStamped& start, const geom
 }
 
 bool GlobalPlanner::makePlan(const geometry_msgs::PoseStamped& start, const geometry_msgs::PoseStamped& goal,
-                           double tolerance, std::vector<geometry_msgs::PoseStamped>& plan) {
+                           double tolerance, std::vector<geometry_msgs::PoseStamped>& plan)
+    {
     boost::mutex::scoped_lock lock(mutex_);
+
     if (!initialized_) {
         ROS_ERROR(
                 "This planner has not been initialized yet, but it is being used, please call initialize() before use");
@@ -271,6 +273,7 @@ bool GlobalPlanner::makePlan(const geometry_msgs::PoseStamped& start, const geom
     unsigned int start_x_i, start_y_i, goal_x_i, goal_y_i;
     double start_x, start_y, goal_x, goal_y;
 
+    // change start coordinates to map indices using costmap method
     if (!costmap_->worldToMap(wx, wy, start_x_i, start_y_i)) {
         ROS_WARN(
                 "The robot's start position is off the global costmap. Planning will always fail, are you sure the robot has been properly localized?");
@@ -280,9 +283,11 @@ bool GlobalPlanner::makePlan(const geometry_msgs::PoseStamped& start, const geom
         start_x = start_x_i;
         start_y = start_y_i;
     }else{
+        // change start coordinates to map using planner's method (get cell's center)
         worldToMap(wx, wy, start_x, start_y);
     }
 
+    // change goal coordinates to map indices using costmap method
     wx = goal.pose.position.x;
     wy = goal.pose.position.y;
 
@@ -313,11 +318,15 @@ bool GlobalPlanner::makePlan(const geometry_msgs::PoseStamped& start, const geom
 
     outlineMap(costmap_->getCharMap(), nx, ny, costmap_2d::LETHAL_OBSTACLE);
 
+    // calculae potential using Expander
     bool found_legal = planner_->calculatePotentials(costmap_->getCharMap(), start_x, start_y, goal_x, goal_y,
                                                     nx * ny * 2, potential_array_);
 
+    // clear endpoint: clear cells around goal by calculating their potential if was not calculated by the expander.
+    // to avoid having cells near the goal with invalid potential -> issue when tracing back
     if(!old_navfn_behavior_)
         planner_->clearEndpoint(costmap_->getCharMap(), potential_array_, goal_x_i, goal_y_i, 2);
+    // publish potential
     if(publish_potential_)
         publishPotential(potential_array_);
 
@@ -337,7 +346,7 @@ bool GlobalPlanner::makePlan(const geometry_msgs::PoseStamped& start, const geom
 
     // add orientations if needed
     orientation_filter_->processPath(start, plan);
-    
+
     //publish the plan for visualization purposes
     publishPlan(plan);
     delete potential_array_;

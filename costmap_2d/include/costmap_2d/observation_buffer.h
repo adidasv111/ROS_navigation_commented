@@ -67,7 +67,7 @@ public:
    * @param  observation_keep_time Defines the persistence of observations in seconds, 0 means only keep the latest
    * @param  expected_update_rate How often this buffer is expected to be updated, 0 means there is no limit
    * @param  min_obstacle_height The minimum height of a hitpoint to be considered legal
-   * @param  max_obstacle_height The minimum height of a hitpoint to be considered legal
+   * @param  max_obstacle_height The maximum height of a hitpoint to be considered legal
    * @param  obstacle_range The range to which the sensor should be trusted for inserting obstacles
    * @param  raytrace_range The range to which the sensor should be trusted for raytracing to clear out space
    * @param  tf A reference to a TransformListener

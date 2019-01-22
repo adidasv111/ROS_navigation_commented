@@ -66,7 +66,7 @@ void ObstacleLayer::onInitialize()
   ObstacleLayer::matchSize();
   current_ = true;
 
-  global_frame_ = layered_costmap_->getGlobalFrameID();
+  global_frame_ = layered_costmap_->getGlobalFrameID(); //get ID of global frame
   double transform_tolerance;
   nh.param("transform_tolerance", transform_tolerance, 0.2);
 
@@ -153,7 +153,7 @@ void ObstacleLayer::onInitialize()
         "expected update rate: %.2f, observation persistence: %.2f",
         source.c_str(), topic.c_str(), global_frame_.c_str(), expected_update_rate, observation_keep_time);
 
-    // create a callback for the topic
+    // create a callback for the topic, according to the topic's data type
     if (data_type == "LaserScan")
     {
       boost::shared_ptr < message_filters::Subscriber<sensor_msgs::LaserScan>
@@ -377,7 +377,7 @@ void ObstacleLayer::updateBounds(double robot_x, double robot_y, double robot_ya
     {
       double px = cloud.points[i].x, py = cloud.points[i].y, pz = cloud.points[i].z;
 
-      // if the obstacle is too high or too far away from the robot we won't add it
+      // if the obstacle is too high we won't add it
       if (pz > max_obstacle_height_)
       {
         ROS_DEBUG("The point is too high");
@@ -388,7 +388,7 @@ void ObstacleLayer::updateBounds(double robot_x, double robot_y, double robot_ya
       double sq_dist = (px - obs.origin_.x) * (px - obs.origin_.x) + (py - obs.origin_.y) * (py - obs.origin_.y)
           + (pz - obs.origin_.z) * (pz - obs.origin_.z);
 
-      // if the point is far enough away... we won't consider it
+      // if the point is too far from the robot we won't add it
       if (sq_dist >= sq_obstacle_range)
       {
         ROS_DEBUG("The point is too far away");
@@ -403,6 +403,7 @@ void ObstacleLayer::updateBounds(double robot_x, double robot_y, double robot_ya
         continue;
       }
 
+      // mark cell at observation as an obstacle
       unsigned int index = getIndex(mx, my);
       costmap_[index] = LETHAL_OBSTACLE;
       touch(px, py, min_x, min_y, max_x, max_y);
@@ -416,6 +417,8 @@ void ObstacleLayer::updateFootprint(double robot_x, double robot_y, double robot
                                     double* max_x, double* max_y)
 {
     if (!footprint_clearing_enabled_) return;
+
+    // build oriented footprint around the robot
     transformFootprint(robot_x, robot_y, robot_yaw, getFootprint(), transformed_footprint_);
 
     for (unsigned int i = 0; i < transformed_footprint_.size(); i++)
@@ -531,6 +534,7 @@ void ObstacleLayer::raytraceFreespace(const Observation& clearing_observation, d
     double a = wx - ox;
     double b = wy - oy;
 
+    // point outside the map => replace the point by a point on the edge of the map in the same direction
     // the minimum value to raytrace from is the origin
     if (wx < origin_x)
     {

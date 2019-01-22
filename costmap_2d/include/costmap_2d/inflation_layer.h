@@ -63,8 +63,7 @@ public:
    * @param  sy The y coordinate of the closest obstacle cell in the costmap
    * @return
    */
-  CellData(double i, unsigned int x, unsigned int y, unsigned int sx, unsigned int sy) :
-      index_(i), x_(x), y_(y), src_x_(sx), src_y_(sy)
+  CellData(double i, unsigned int x, unsigned int y, unsigned int sx, unsigned int sy) : index_(i), x_(x), y_(y), src_x_(sx), src_y_(sy)
   {
   }
   unsigned int index_;
@@ -72,6 +71,10 @@ public:
   unsigned int src_x_, src_y_;
 };
 
+/**
+ * @class InflationLayer
+ * @brief Provides capabilities to inflate obstacles in a costmap
+ */
 class InflationLayer : public Layer
 {
 public:
@@ -81,17 +84,29 @@ public:
   {
     deleteKernels();
     if (dsrv_)
-        delete dsrv_;
+      delete dsrv_;
   }
 
+  /** @brief Override Initialize the layer.*/
   virtual void onInitialize();
-  virtual void updateBounds(double robot_x, double robot_y, double robot_yaw, double* min_x, double* min_y,
-                            double* max_x, double* max_y);
-  virtual void updateCosts(costmap_2d::Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j);
+
+  /** @brief Override This is called by the LayeredCostmap to poll this plugin as to how
+   *        much of the costmap it needs to update. Each layer can increase
+   *        the size of this bounds.*/
+  virtual void updateBounds(double robot_x, double robot_y, double robot_yaw, double *min_x, double *min_y,
+                            double *max_x, double *max_y);
+
+  /** @brief Override Actually update the underlying costmap (master_grid) by inflating obstacles,
+   * only within the bounds calculated during UpdateBounds().
+   * @details */
+  virtual void updateCosts(costmap_2d::Costmap2D &master_grid, int min_i, int min_j, int max_i, int max_j);
+
   virtual bool isDiscretized()
   {
     return true;
   }
+
+  /** @brief Override: make this layer match the size of the parent costmap.*/
   virtual void matchSize();
 
   virtual void reset() { onInitialize(); }
@@ -124,8 +139,9 @@ public:
   void setInflationParameters(double inflation_radius, double cost_scaling_factor);
 
 protected:
+  // When footprint changes, calculates inscribed radius and recompute the cached costs and distances between cells
   virtual void onFootprintChanged();
-  boost::recursive_mutex* inflation_access_;
+  boost::recursive_mutex *inflation_access_;
 
 private:
   /**
@@ -158,39 +174,59 @@ private:
     return cached_costs_[dx][dy];
   }
 
+  /** @brief Compute distance and cost caches*/
   void computeCaches();
-  void deleteKernels();
-  void inflate_area(int min_i, int min_j, int max_i, int max_j, unsigned char* master_grid);
 
+  /** @brief Delete chaches*/
+  void deleteKernels();
+
+  void inflate_area(int min_i, int min_j, int max_i, int max_j, unsigned char *master_grid);
+
+  /**
+   * @brief  Given distance in the world... convert it to cells
+   * @param  world_dist The world distance
+   * @return The equivalent cell distance
+   */
   unsigned int cellDistance(double world_dist)
   {
     return layered_costmap_->getCostmap()->cellDistance(world_dist);
   }
 
+/**
+ * @brief  Given an index of a cell in the costmap, place it into a list pending for obstacle inflation
+ * @details A cell is added to inflation_cells_ if it is within the inflation radius from an obstacle. with key = dist of cell from obstacle
+ * @param  grid The costmap
+ * @param  index The index of the cell
+ * @param  mx The x coordinate of the cell (can be computed from the index, but saves time to store it)
+ * @param  my The y coordinate of the cell (can be computed from the index, but saves time to store it)
+ * @param  src_x The x index of the obstacle point inflation started at
+ * @param  src_y The y index of the obstacle point inflation started at
+ */
   inline void enqueue(unsigned int index, unsigned int mx, unsigned int my,
                       unsigned int src_x, unsigned int src_y);
 
-  double inflation_radius_, inscribed_radius_, weight_;
+  double inflation_radius_, inscribed_radius_;
+  double weight_; // controls the decrease rate of the exponential in the inflation profile
   bool inflate_unknown_;
-  unsigned int cell_inflation_radius_;
-  unsigned int cached_cell_inflation_radius_;
-  std::map<double, std::vector<CellData> > inflation_cells_;
+  unsigned int cell_inflation_radius_;        // inflation_radius_ in cells
+  unsigned int cached_cell_inflation_radius_; //inflation_radius_ used for computing the caches
+  std::map<double, std::vector<CellData>> inflation_cells_; // map of cells to be inflated. each element is a vector of cells whose key = dist of cells from obstacle ( all cells in the vector have the same dist)
 
   double resolution_;
 
-  bool* seen_;
+  bool *seen_;
   int seen_size_;
 
-  unsigned char** cached_costs_;
-  double** cached_distances_;
+  unsigned char **cached_costs_; // pre-computed costs
+  double **cached_distances_;    // pre-computed distances
   double last_min_x_, last_min_y_, last_max_x_, last_max_y_;
 
   dynamic_reconfigure::Server<costmap_2d::InflationPluginConfig> *dsrv_;
   void reconfigureCB(costmap_2d::InflationPluginConfig &config, uint32_t level);
 
-  bool need_reinflation_;  ///< Indicates that the entire costmap should be reinflated next time around.
+  bool need_reinflation_; ///< Indicates that the entire costmap should be reinflated next time around.
 };
 
-}  // namespace costmap_2d
+} // namespace costmap_2d
 
-#endif  // COSTMAP_2D_INFLATION_LAYER_H_
+#endif // COSTMAP_2D_INFLATION_LAYER_H_

@@ -171,6 +171,7 @@ bool LayeredCostmap::isCurrent()
   return current_;
 }
 
+// calculates the max and min distances which correspond to inscribed_radius_ and circumscribed_radius_
 void LayeredCostmap::setFootprint(const std::vector<geometry_msgs::Point>& footprint_spec)
 {
   footprint_ = footprint_spec;

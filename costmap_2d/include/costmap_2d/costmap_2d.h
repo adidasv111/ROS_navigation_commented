@@ -278,6 +278,7 @@ public:
    */
   bool saveMap(std::string file_name);
 
+  /** @brief  Resize map to new parameters*/
   void resizeMap(unsigned int size_x, unsigned int size_y, double resolution, double origin_x,
                  double origin_y);
 
@@ -349,7 +350,7 @@ protected:
 
   /**
    * @brief  Raytrace a line and apply some action at each step
-   * @param  at The action to take... a functor
+   * @param  at The action to take... a function
    * @param  x0 The starting x coordinate
    * @param  y0 The starting y coordinate
    * @param  x1 The ending x coordinate
@@ -360,22 +361,23 @@ protected:
     inline void raytraceLine(ActionType at, unsigned int x0, unsigned int y0, unsigned int x1, unsigned int y1,
                              unsigned int max_length = UINT_MAX)
     {
+      // calculate the distances
       int dx = x1 - x0;
       int dy = y1 - y0;
 
       unsigned int abs_dx = abs(dx);
       unsigned int abs_dy = abs(dy);
 
-      int offset_dx = sign(dx);
-      int offset_dy = sign(dy) * size_x_;
+      int offset_dx = sign(dx);           // no. of cells to move dx along the x axis
+      int offset_dy = sign(dy) * size_x_; // no. of cells to move dy along the y axis
 
       unsigned int offset = y0 * size_x_ + x0;
 
       // we need to chose how much to scale our dominant dimension, based on the maximum length of the line
       double dist = hypot(dx, dy);
-      double scale = (dist == 0.0) ? 1.0 : std::min(1.0, max_length / dist);
+      double scale = (dist == 0.0) ? 1.0 : std::min(1.0, max_length / dist); //=> (dist < max_length => scale < 1)
 
-      // if x is dominant
+      // if x is dominant <=> -1<slope<1
       if (abs_dx >= abs_dy)
       {
         int error_y = abs_dx / 2;
@@ -383,7 +385,7 @@ protected:
         return;
       }
 
-      // otherwise y is dominant
+      // otherwise y is dominant <=> slope < -1 or slope > 1
       int error_x = abs_dy / 2;
       bresenham2D(at, abs_dy, abs_dx, error_x, offset_dy, offset_dx, offset, (unsigned int)(scale * abs_dy));
     }

@@ -127,6 +127,7 @@ void Costmap2DPublisher::publishCostmap()
 
   float resolution = costmap_->getResolution();
 
+  // publish full map is asked for or if any map parameter has changed
   if (always_send_full_costmap_ || grid_.info.resolution != resolution ||
       grid_.info.width != costmap_->getSizeInCellsX() ||
       grid_.info.height != costmap_->getSizeInCellsY() ||
@@ -136,6 +137,7 @@ void Costmap2DPublisher::publishCostmap()
     prepareGrid();
     costmap_pub_.publish(grid_);
   }
+  // otherwise only publish map updates
   else if (x0_ < xn_)
   {
     boost::unique_lock<Costmap2D::mutex_t> lock(*(costmap_->getMutex()));

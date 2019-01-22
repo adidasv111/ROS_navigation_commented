@@ -246,7 +246,7 @@ void VoxelLayer::clearNonLethal(double wx, double wy, double w_size_x, double w_
   {
     for (unsigned int i = map_sx; i <= map_ex; ++i)
     {
-      // if the cell is a lethal obstacle... we'll keep it and queue it, otherwise... we'll clear it
+      // if the cell is a lethal obstacle we'll keep it and queue it, otherwise we'll clear it
       if (*current != LETHAL_OBSTACLE)
       {
         if (clear_no_info || *current != NO_INFORMATION)

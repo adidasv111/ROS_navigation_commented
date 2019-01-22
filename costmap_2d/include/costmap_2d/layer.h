@@ -47,6 +47,10 @@ namespace costmap_2d
 {
 class LayeredCostmap;
 
+/**
+ * @class Layer
+ * @brief A virtual base class for all layers.
+ */
 class Layer
 {
 public:
@@ -65,10 +69,7 @@ public:
   virtual void updateBounds(double robot_x, double robot_y, double robot_yaw, double* min_x, double* min_y,
                             double* max_x, double* max_y) {}
 
-  /**
-   * @brief Actually update the underlying costmap, only within the bounds
-   *        calculated during UpdateBounds().
-   */
+  /** @brief Actually update the underlying costmap, only within the bounds calculated during UpdateBounds().*/
   virtual void updateCosts(Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j) {}
 
   /** @brief Stop publishers. */

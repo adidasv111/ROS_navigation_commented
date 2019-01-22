@@ -94,9 +94,10 @@ public:
   {
   }
 
-  geometry_msgs::Point origin_;
-  pcl::PointCloud<pcl::PointXYZ>* cloud_;
-  double obstacle_range_, raytrace_range_;
+  geometry_msgs::Point origin_;             /// @brief The origin point of the observation
+  pcl::PointCloud<pcl::PointXYZ>* cloud_;   /// @brief The point cloud of the observation
+  double obstacle_range_;   /// @brief The range out to which an observation should be able to insert obstacles
+  double raytrace_range_;   /// @brief The range out to which an observation should be able to clear via raytracing
 };
 
 }  // namespace costmap_2d

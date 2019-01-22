@@ -43,7 +43,10 @@
 
 namespace costmap_2d
 {
-
+/**
+ * @class CostmapLayer
+ * @brief Defines a costmap layer based on Layer and Costmap2D. Provides methods to update master costmap based on this layer.
+ */
 class CostmapLayer : public Layer, public Costmap2D
 {
 public:
@@ -56,6 +59,7 @@ public:
     return true;
   }
 
+  /** @brief Override make this layer match the size of the parent costmap.*/
   virtual void matchSize();
 
   /**
@@ -74,7 +78,7 @@ protected:
    * Updates the master_grid within the specified
    * bounding box using this layer's values.
    *
-   * TrueOverwrite means every value from this layer
+   * TrueOverwrite : EVERY value from this layer
    * is written into the master grid.
    */
   void updateWithTrueOverwrite(costmap_2d::Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j);
@@ -83,7 +87,7 @@ protected:
    * Updates the master_grid within the specified
    * bounding box using this layer's values.
    *
-   * Overwrite means every valid value from this layer
+   * Overwrite : every VALID value from this layer
    * is written into the master grid (does not copy NO_INFORMATION)
    */
   void updateWithOverwrite(costmap_2d::Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j);

@@ -58,7 +58,10 @@
 
 namespace costmap_2d
 {
-
+/**
+ * @class ObstacleLayer
+ * @brief Layer with obstacles updated from observations.
+ */
 class ObstacleLayer : public CostmapLayer
 {
 public:
@@ -68,12 +71,25 @@ public:
   }
 
   virtual ~ObstacleLayer();
+
+  /** @brief Override Initialize the layer.*/
   virtual void onInitialize();
+
+  /** @brief Override Update this layer based on observations.
+   * @details Use marking observations to add obstacles based on the observation.
+   * Use clearing observations to clear obstacles in the observation's direction using raytracing.
+  */
   virtual void updateBounds(double robot_x, double robot_y, double robot_yaw, double* min_x, double* min_y,
                             double* max_x, double* max_y);
+
+  /** @brief Override Actually update the underlying costmap, using methods from CostmapLayer to update the master map based on this layer.
+   * only within the bounds calculated during UpdateBounds().*/
   virtual void updateCosts(costmap_2d::Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j);
 
+  /** @brief Override Restart publishers if they've been stopped. */
   virtual void activate();
+
+  /** @brief Override Unsubscribe from subscribers. */
   virtual void deactivate();
   virtual void reset();
 
@@ -146,7 +162,8 @@ protected:
 
   std::vector<geometry_msgs::Point> transformed_footprint_;
   bool footprint_clearing_enabled_;
-  void updateFootprint(double robot_x, double robot_y, double robot_yaw, double* min_x, double* min_y, 
+
+  void updateFootprint(double robot_x, double robot_y, double robot_yaw, double* min_x, double* min_y,
                        double* max_x, double* max_y);
 
   std::string global_frame_;  ///< @brief The global frame for the costmap

@@ -62,8 +62,9 @@ void StaticLayer::onInitialize()
   ros::NodeHandle nh("~/" + name_), g_nh;
   current_ = true;
 
-  global_frame_ = layered_costmap_->getGlobalFrameID();
+  global_frame_ = layered_costmap_->getGlobalFrameID(); //get ID of global frame
 
+  // get parameters (?)
   std::string map_topic;
   nh.param("map_topic", map_topic, std::string("map"));
   nh.param("first_map_only", first_map_only_, false);

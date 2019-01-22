@@ -62,7 +62,7 @@ void CostmapLayer::updateWithMax(costmap_2d::Costmap2D& master_grid, int min_i, 
       }
 
       unsigned char old_cost = master_array[it];
-      if (old_cost == NO_INFORMATION || old_cost < costmap_[it])
+      if (old_cost == NO_INFORMATION || old_cost <  [it])
         master_array[it] = costmap_[it];
       it++;
     }

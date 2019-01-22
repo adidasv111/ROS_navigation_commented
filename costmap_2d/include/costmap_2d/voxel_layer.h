@@ -70,15 +70,25 @@ public:
 
   virtual ~VoxelLayer();
 
+  /** @brief Override Initialize the layer.*/
   virtual void onInitialize();
+
   virtual void updateBounds(double robot_x, double robot_y, double robot_yaw, double* min_x, double* min_y,
                             double* max_x, double* max_y);
 
+  /**
+   * @brief  Move the origin of the costmap to a new location.... keeping data when it can
+   * @param  new_origin_x The x coordinate of the new origin
+   * @param  new_origin_y The y coordinate of the new origin
+   */
   void updateOrigin(double new_origin_x, double new_origin_y);
+
   bool isDiscretized()
   {
     return true;
   }
+
+  /** @brief Implement this to make this layer match the size of the parent costmap. */
   virtual void matchSize();
   virtual void reset();
 
@@ -90,7 +100,14 @@ protected:
 
 private:
   void reconfigureCB(costmap_2d::VoxelPluginConfig &config, uint32_t level);
+
+  /** @brief Clear non-lethal obstacles in a windows, to get it ready for inflation
+   * @param wx, wy center point of the window
+   * @param w_size_x, w_size_y window size
+   * @param clear_no_info true if want to clear NO_INFORMATION cells
+  */
   void clearNonLethal(double wx, double wy, double w_size_x, double w_size_y, bool clear_no_info);
+
   virtual void raytraceFreespace(const costmap_2d::Observation& clearing_observation, double* min_x, double* min_y,
                                  double* max_x, double* max_y);
 

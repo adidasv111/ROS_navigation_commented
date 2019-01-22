@@ -49,45 +49,62 @@
 
 namespace costmap_2d
 {
-
+/**
+ * @class StaticLayer
+ * @brief Layer of static costmap.
+ */
 class StaticLayer : public CostmapLayer
 {
 public:
   StaticLayer();
   virtual ~StaticLayer();
+
+  /** @brief Override Initialize the layer.*/
   virtual void onInitialize();
+
+  /** @brief Override Restart publishers if they've been stopped. */
   virtual void activate();
+
+  /** @brief Override Shutdown subscribers. */
   virtual void deactivate();
   virtual void reset();
 
-  virtual void updateBounds(double robot_x, double robot_y, double robot_yaw, double* min_x, double* min_y,
-                            double* max_x, double* max_y);
-  virtual void updateCosts(costmap_2d::Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j);
+  /** @brief Override This is called by the LayeredCostmap to poll this plugin as to how
+   *        much of the costmap it needs to update. Each layer can increase
+   *        the size of this bounds.*/
+  virtual void updateBounds(double robot_x, double robot_y, double robot_yaw, double *min_x, double *min_y,
+                            double *max_x, double *max_y);
 
+  /** @brief Override Actually update the underlying costmap, using methods from CostmapLayer to update the master map based on this layer.
+   * only within the bounds calculated during UpdateBounds().*/
+  virtual void updateCosts(costmap_2d::Costmap2D &master_grid, int min_i, int min_j, int max_i, int max_j);
+
+  /** @brief Override: make this layer match the size of the parent costmap.*/
   virtual void matchSize();
 
 private:
-  /**
-   * @brief  Callback to update the costmap's map from the map_server
-   * @param new_map The map to put into the costmap. The origin of the new
-   * map along with its size will determine what parts of the costmap's
-   * static map are overwritten.
-   */
-  void incomingMap(const nav_msgs::OccupancyGridConstPtr& new_map);
-  void incomingUpdate(const map_msgs::OccupancyGridUpdateConstPtr& update);
+  /** @brief  Callback to update the FULL costmap's map from the map_server
+   * @param new_map The map to put into the costmap.*/
+  void incomingMap(const nav_msgs::OccupancyGridConstPtr &new_map);
+
+  /** @brief  Callback to update the PART of costmap's map from the map_server, when an update is received.
+   * The origin of the new map along with its size will determine what parts of the costmap's static map are overwritten.
+   * @param new_map The map to put into the costmap.*/
+  void incomingUpdate(const map_msgs::OccupancyGridUpdateConstPtr &update);
   void reconfigureCB(costmap_2d::GenericPluginConfig &config, uint32_t level);
 
+  /** @brief Interpret the value of the cell, based on used parameters.*/
   unsigned char interpretValue(unsigned char value);
 
-  std::string global_frame_;  ///< @brief The global frame for the costmap
-  std::string map_frame_;  /// @brief frame that map is located in
+  std::string global_frame_; ///< @brief The global frame for the costmap
+  std::string map_frame_;    /// @brief frame that map is located in
   bool subscribe_to_updates_;
   bool map_received_;
   bool has_updated_data_;
   unsigned int x_, y_, width_, height_;
   bool track_unknown_space_;
   bool use_maximum_;
-  bool first_map_only_;      ///< @brief Store the first static map and reuse it on reinitializing
+  bool first_map_only_; ///< @brief Store the first static map and reuse it on reinitializing
   bool trinary_costmap_;
   ros::Subscriber map_sub_, map_update_sub_;
 
@@ -96,6 +113,6 @@ private:
   dynamic_reconfigure::Server<costmap_2d::GenericPluginConfig> *dsrv_;
 };
 
-}  // namespace costmap_2d
+} // namespace costmap_2d
 
-#endif  // COSTMAP_2D_STATIC_LAYER_H_
+#endif // COSTMAP_2D_STATIC_LAYER_H_

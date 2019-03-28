@@ -50,7 +50,7 @@ namespace move_base {
     as_(NULL),
     planner_costmap_ros_(NULL), controller_costmap_ros_(NULL),
     bgp_loader_("nav_core", "nav_core::BaseGlobalPlanner"),
-    blp_loader_("nav_core", "nav_core::BaseLocalPlanner"), 
+    blp_loader_("nav_core", "nav_core::BaseLocalPlanner"),
     recovery_loader_("nav_core", "nav_core::RecoveryBehavior"),
     planner_plan_(NULL), latest_plan_(NULL), controller_plan_(NULL),
     runPlanner_(false), setup_(false), p_freq_change_(false), c_freq_change_(false), new_global_plan_(false) {
@@ -368,8 +368,10 @@ namespace move_base {
 
     //first try to make a plan to the exact desired goal
     std::vector<geometry_msgs::PoseStamped> global_plan;
-    if(!planner_->makePlan(start, req.goal, global_plan) || global_plan.empty()){
-      ROS_DEBUG_NAMED("move_base","Failed to find a plan to exact goal of (%.2f, %.2f), searching for a feasible goal within tolerance", 
+    if(!planner_->makePlan(start, req.goal, global_plan) || global_plan.empty())
+    {
+      // if failed to plan to exact desired goal
+      ROS_DEBUG_NAMED("move_base","Failed to find a plan to exact goal of (%.2f, %.2f), searching for a feasible goal within tolerance",
           req.goal.pose.position.x, req.goal.pose.position.y);
 
       //search outwards for a feasible goal within the specified tolerance
@@ -378,10 +380,15 @@ namespace move_base {
       bool found_legal = false;
       float resolution = planner_costmap_ros_->getCostmap()->getResolution();
       float search_increment = resolution*3.0;
-      if(req.tolerance > 0.0 && req.tolerance < search_increment) search_increment = req.tolerance;
-      for(float max_offset = search_increment; max_offset <= req.tolerance && !found_legal; max_offset += search_increment) {
-        for(float y_offset = 0; y_offset <= max_offset && !found_legal; y_offset += search_increment) {
-          for(float x_offset = 0; x_offset <= max_offset && !found_legal; x_offset += search_increment) {
+      if(req.tolerance > 0.0 && req.tolerance < search_increment)
+        search_increment = req.tolerance;
+
+      for(float max_offset = search_increment; max_offset <= req.tolerance && !found_legal; max_offset += search_increment)
+      {
+        for(float y_offset = 0; y_offset <= max_offset && !found_legal; y_offset += search_increment)
+        {
+          for(float x_offset = 0; x_offset <= max_offset && !found_legal; x_offset += search_increment)
+          {
 
             //don't search again inside the current outer layer
             if(x_offset < max_offset-1e-9 && y_offset < max_offset-1e-9) continue;
@@ -560,14 +567,17 @@ namespace move_base {
     ros::Timer timer;
     bool wait_for_wake = false;
     boost::unique_lock<boost::recursive_mutex> lock(planner_mutex_);
-    while(n.ok()){
+    while(n.ok())
+    {
       //check if we should run the planner (the mutex is locked)
-      while(wait_for_wake || !runPlanner_){
+      while(wait_for_wake || !runPlanner_)
+      {
         //if we should not be running the planner then suspend this thread
         ROS_DEBUG_NAMED("move_base_plan_thread","Planner thread is suspending");
         planner_cond_.wait(lock);
         wait_for_wake = false;
       }
+
       ros::Time start_time = ros::Time::now();
 
       //time to plan! get a copy of the goal and unlock the mutex
@@ -579,7 +589,9 @@ namespace move_base {
       planner_plan_->clear();
       bool gotPlan = n.ok() && makePlan(temp_goal, *planner_plan_);
 
-      if(gotPlan){
+      // if planning successful, keep the plan and switch to CONTROLLING state
+      if(gotPlan)
+      {
         ROS_DEBUG_NAMED("move_base_plan_thread","Got Plan with %zu points!", planner_plan_->size());
         //pointer swap the plans under mutex (the controller will pull from latest_plan_)
         std::vector<geometry_msgs::PoseStamped>* temp_plan = planner_plan_;
@@ -601,11 +613,13 @@ namespace move_base {
         lock.unlock();
       }
       //if we didn't get a plan and we are in the planning state (the robot isn't moving)
-      else if(state_==PLANNING){
+      else if(state_==PLANNING)
+      {
         ROS_DEBUG_NAMED("move_base_plan_thread","No Plan...");
         ros::Time attempt_end = last_valid_plan_ + ros::Duration(planner_patience_);
 
         //check if we've tried to make a plan for over our time limit or our maximum number of retries
+        // if over time limit, switch to CLEARING state
         //issue #496: we stop planning when one of the conditions is true, but if max_planning_retries_
         //is negative (the default), it is just ignored and we have the same behavior as ever
         lock.lock();
@@ -678,8 +692,10 @@ namespace move_base {
         c_freq_change_ = false;
       }
 
-      if(as_->isPreemptRequested()){
-        if(as_->isNewGoalAvailable()){
+      if(as_->isPreemptRequested())
+      {
+        if(as_->isNewGoalAvailable())
+        {
           //if we're active and a new goal is available, we'll accept it, but we won't shut anything down
           move_base_msgs::MoveBaseGoal new_goal = *as_->acceptNewGoal();
 
@@ -725,7 +741,8 @@ namespace move_base {
       }
 
       //we also want to check if we've changed global frames because we need to transform our goal pose
-      if(goal.header.frame_id != planner_costmap_ros_->getGlobalFrameID()){
+      if(goal.header.frame_id != planner_costmap_ros_->getGlobalFrameID())
+      {
         goal = goalToGlobalFrame(goal);
 
         //we want to go back to the planning state for the next execution cycle
@@ -809,7 +826,7 @@ namespace move_base {
       last_oscillation_reset_ = ros::Time::now();
       oscillation_pose_ = current_position;
 
-      //if our last recovery was caused by oscillation, we want to reset the recovery index 
+      //if our last recovery was caused by oscillation, we want to reset the recovery index
       if(recovery_trigger_ == OSCILLATION_R)
         recovery_index_ = 0;
     }
@@ -832,11 +849,14 @@ namespace move_base {
       std::vector<geometry_msgs::PoseStamped>* temp_plan = controller_plan_;
 
       boost::unique_lock<boost::recursive_mutex> lock(planner_mutex_);
+      // set the controller plan to global plan
       controller_plan_ = latest_plan_;
+      // keep last controller plan as latest_plan_
       latest_plan_ = temp_plan;
       lock.unlock();
       ROS_DEBUG_NAMED("move_base","pointers swapped!");
 
+      // set local planner's plan to the one got from global planner
       if(!tc_->setPlan(*controller_plan_)){
         //ABORT and SHUTDOWN COSTMAPS
         ROS_ERROR("Failed to pass global plan to the controller, aborting.");
@@ -857,7 +877,8 @@ namespace move_base {
     }
 
     //the move_base state machine, handles the control logic for navigation
-    switch(state_){
+    switch(state_)
+    {
       //if we are in a planning state, then we'll attempt to make a plan
       case PLANNING:
         {
@@ -894,32 +915,39 @@ namespace move_base {
           state_ = CLEARING;
           recovery_trigger_ = OSCILLATION_R;
         }
-        
+
         {
+          // lock the controller costmap
          boost::unique_lock<costmap_2d::Costmap2D::mutex_t> lock(*(controller_costmap_ros_->getCostmap()->getMutex()));
-        
-        if(tc_->computeVelocityCommands(cmd_vel)){
+
+        // use controller to compute velocity commands
+        if(tc_->computeVelocityCommands(cmd_vel))
+        {
           ROS_DEBUG_NAMED( "move_base", "Got a valid command from the local planner: %.3lf, %.3lf, %.3lf",
                            cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z );
+          // keep the time of the last successful control
           last_valid_control_ = ros::Time::now();
           //make sure that we send the velocity command to the base
           vel_pub_.publish(cmd_vel);
           if(recovery_trigger_ == CONTROLLING_R)
             recovery_index_ = 0;
         }
-        else {
+        else
+        {
           ROS_DEBUG_NAMED("move_base", "The local planner could not find a valid plan.");
           ros::Time attempt_end = last_valid_control_ + ros::Duration(controller_patience_);
 
           //check if we've tried to find a valid control for longer than our time limit
-          if(ros::Time::now() > attempt_end){
+          if(ros::Time::now() > attempt_end)
+          {
             //we'll move into our obstacle clearing mode
             publishZeroVelocity();
             state_ = CLEARING;
             recovery_trigger_ = CONTROLLING_R;
           }
-          else{
-            //otherwise, if we can't find a valid control, we'll go back to planning
+          else
+          {
+            // if we can't find a valid control and not reached time limit,  try to plan again
             last_valid_plan_ = ros::Time::now();
             planning_retries_ = 0;
             state_ = PLANNING;
@@ -1010,7 +1038,7 @@ namespace move_base {
                     std::string name_i = behavior_list[i]["name"];
                     std::string name_j = behavior_list[j]["name"];
                     if(name_i == name_j){
-                      ROS_ERROR("A recovery behavior with the name %s already exists, this is not allowed. Using the default recovery behaviors instead.", 
+                      ROS_ERROR("A recovery behavior with the name %s already exists, this is not allowed. Using the default recovery behaviors instead.",
                           name_i.c_str());
                       return false;
                     }
@@ -1066,7 +1094,7 @@ namespace move_base {
         }
       }
       else{
-        ROS_ERROR("The recovery behavior specification must be a list, but is of XmlRpcType %d. We'll use the default recovery behaviors instead.", 
+        ROS_ERROR("The recovery behavior specification must be a list, but is of XmlRpcType %d. We'll use the default recovery behaviors instead.",
             behavior_list.getType());
         return false;
       }

@@ -296,7 +296,7 @@ void InflationLayer::updateCosts(costmap_2d::Costmap2D& master_grid, int min_i, 
 inline void InflationLayer::enqueue(unsigned int index, unsigned int mx, unsigned int my,
                                     unsigned int src_x, unsigned int src_y)
 {
-  if (!seen_[index])  //if the cell hasnt been seen already
+  if (!seen_[index])  //if the cell hasn't been seen already
   {
     // we compute our distance table one cell further than the inflation radius dictates so we can make the check below
     double distance = distanceLookup(mx, my, src_x, src_y);
@@ -335,7 +335,7 @@ void InflationLayer::computeCaches()
       }
     }
 
-    cached_cell_inflation_radius_ = cell_inflation_radius_;   // update chached radius
+    cached_cell_inflation_radius_ = cell_inflation_radius_;   // update cached radius
   }
 
   // compute costs - for each indices pair (i,j), the cost is calculated from the inflation profile based on the distance between them

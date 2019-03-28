@@ -371,6 +371,7 @@ protected:
       int offset_dx = sign(dx);           // no. of cells to move dx along the x axis
       int offset_dy = sign(dy) * size_x_; // no. of cells to move dy along the y axis
 
+      // index in the map of the cell we raytrace from
       unsigned int offset = y0 * size_x_ + x0;
 
       // we need to chose how much to scale our dominant dimension, based on the maximum length of the line
@@ -401,7 +402,7 @@ private:
       unsigned int end = std::min(max_length, abs_da);
       for (unsigned int i = 0; i < end; ++i)
       {
-        at(offset);
+        at(offset); // perform action on cell at index = offset
         offset += offset_a;
         error_b += abs_db;
         if ((unsigned int)error_b >= abs_da)

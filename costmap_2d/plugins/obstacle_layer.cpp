@@ -563,7 +563,7 @@ void ObstacleLayer::raytraceFreespace(const Observation& clearing_observation, d
       wy = map_end_y - .001;
     }
 
-    // now that the vector is scaled correctly... we'll get the map coordinates of its endpoint
+    // now that the vector is scaled correctly... we'll get the map indices of its endpoint
     unsigned int x1, y1;
 
     // check for legality just in case

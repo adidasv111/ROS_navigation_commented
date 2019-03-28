@@ -57,10 +57,10 @@ public:
   /**
    * @brief  Constructor for a CellData objects
    * @param  i The index of the cell in the cost map
-   * @param  x The x coordinate of the cell in the cost map
-   * @param  y The y coordinate of the cell in the cost map
-   * @param  sx The x coordinate of the closest obstacle cell in the costmap
-   * @param  sy The y coordinate of the closest obstacle cell in the costmap
+   * @param  x The x index of the cell in the cost map
+   * @param  y The y index of the cell in the cost map
+   * @param  sx The x index of the closest obstacle cell in the costmap
+   * @param  sy The y index of the closest obstacle cell in the costmap
    * @return
    */
   CellData(double i, unsigned int x, unsigned int y, unsigned int sx, unsigned int sy) : index_(i), x_(x), y_(y), src_x_(sx), src_y_(sy)
